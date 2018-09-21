@@ -1,0 +1,49 @@
+---
+title: "Business"
+author: "Hannah Koschmeder"
+date: "7/22/2018"
+output: pdf_document
+---
+
+##Reading in the Data
+```{r}
+game_data <- read.csv(
+strwrap("2018 Business & Basketball Analytics Hackathon Files/Business
+        Analytics/game_data.csv", width = 1000))
+player_data <- read.csv(
+strwrap("2018 Business & Basketball Analytics Hackathon Files/Business
+        Analytics/player_data.csv", width = 1000))
+test_set <- read.csv(
+strwrap("2018 Business & Basketball Analytics Hackathon Files/Business
+        Analytics/test_set.csv", width = 1000))
+training_set <- read.csv(
+strwrap("2018 Business & Basketball Analytics Hackathon Files/Business
+        Analytics/training_set.csv", width = 1000))
+```
+
+
+##Useful Libraries
+```{r}
+library(plyr)
+library(dplyr)
+```
+
+
+
+##Total Number of International Viewers per Game
+```{r}
+training_set %>%
+  dplyr::group_by(Country) %>%
+  summarise(Total_Viewers = sum(Rounded.Viewers))
+training_set %>%
+  group_by(Game_ID) %>%
+  mutate(Countries_Watching = n())
+
+```
+
+##Regression
+```{r}
+class(training_set$Game_Date)
+summary(lm(Rounded.Viewers~(Away_Team*Home_Team), training_set))
+```
+
